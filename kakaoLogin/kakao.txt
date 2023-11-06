@@ -1,0 +1,16 @@
+REST API
+982e75f737fe11057aa6b583438a89f3
+
+
+Web
+http://localhost:8080
+
+
+Redirect URI
+http://localhost:8080/kakao/login
+
+
+https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=982e75f737fe11057aa6b583438a89f3&redirect_uri=http://localhost:8080/kakao/login
+
+
+DQQxZn3yXAd_esBauA64QKxtB4SAI0TA3634vMm_SQReZPJcJRuw1B4ErWIKKiUPAAABi6KUMT237mS5Kc-sjw

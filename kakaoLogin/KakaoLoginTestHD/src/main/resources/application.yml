@@ -12,3 +12,7 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+  thymeleaf:
+    prefix: classpath:/templates/ # 템플릿 파일의 위치
+    suffix: .html # 템플릿 파일의 확장자
+    cache: false # 개발 중에 캐시 비활성화

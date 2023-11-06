@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class SignUpMessageSender {
 
     // ** 인증 헤더에 사용될 토큰의 접두어 ("Bearer ")
-    public static final String API_KEY = "/NCSZ5U3A0BLMLFUL";
+    public static final String API_KEY = "NCSZ5U3A0BLMLFUL";
 
     // ** 인증 헤더의 이름을 "Authorization"으로 설정.
     public static final String APISECRETKEY = "SDLGGFXKIA6HLICB12CE7XGL7T5WSMZG";

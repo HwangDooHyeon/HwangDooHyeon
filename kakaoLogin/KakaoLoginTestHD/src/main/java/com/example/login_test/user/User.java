@@ -58,7 +58,6 @@ public class User{
     @Column(length = 100, nullable = false, unique = true)
     private String email;
 
-
     @Column(length = 256, nullable = false)
     private String password;
 
@@ -98,4 +97,7 @@ public class User{
         System.out.println(username);
         System.out.println(roles);
     }
+
+
+
 }
