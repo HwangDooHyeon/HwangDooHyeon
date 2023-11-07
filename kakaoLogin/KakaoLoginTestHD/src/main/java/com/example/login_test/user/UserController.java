@@ -25,13 +25,13 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error) {
         userService.join(requestDTO);
-        return ResponseEntity.ok( ApiUtils.success(null) );
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error) {
         userService.checkEmail(requestDTO.getEmail());
-        return ResponseEntity.ok( ApiUtils.success(null) );
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     @PostMapping("/login")
@@ -42,6 +42,5 @@ public class UserController {
         return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt)
                 .body(ApiUtils.success(null));
     }
-
 
 }
