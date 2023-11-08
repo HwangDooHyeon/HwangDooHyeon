@@ -21,6 +21,7 @@ public class KakaoUserInforResponse {
     @AllArgsConstructor
     public static class KakaoAccount {
         private final String email;
+        private final String name;
         private final String phone_number;
     }
 }

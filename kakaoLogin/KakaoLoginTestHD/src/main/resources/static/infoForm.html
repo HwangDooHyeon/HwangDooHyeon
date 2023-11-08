@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>info Form</title>
+</head>
+<body>
+
+<h1>User Info</h1>
+
+<div id="user-info">
+    <p><strong>이름:</strong> <span id="username"></span></p>
+    <p><strong>이메일:</strong> <span id="email"></span></p>
+    <p><strong>전화번호:</strong> <span id="phoneNumber"></span></p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            // 사용자 정보를 가져오는 API 엔드포인트 호출
+            const response = await fetch('/user-info', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const userInfo = await response.json();
+
+                // 사용자 정보를 페이지에 표시
+                document.getElementById('username').textContent = userInfo.username;
+                document.getElementById('email').textContent = userInfo.email;
+                document.getElementById('phoneNumber').textContent = userInfo.phoneNumber;
+            } else {
+                console.error('HTTP Error:', response.status);
+                alert("사용자 정보를 불러오는 중에 문제가 발생했습니다.");
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert("사용자 정보를 불러오는 중에 문제가 발생했습니다.");
+        }
+    });
+</script>
+
+</body>
+</html>

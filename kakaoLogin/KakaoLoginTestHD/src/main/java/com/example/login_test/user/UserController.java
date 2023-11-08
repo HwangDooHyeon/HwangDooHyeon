@@ -35,12 +35,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error) {
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Error error) {
 
         String jwt = userService.login(requestDTO);
 
         return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt)
                 .body(ApiUtils.success(null));
     }
+
+//    @GetMapping("/user-info/1")
+//    public UserInfo getUserInfo(@PathVariable int userId) {
+//        return userService.getUserInfo(userId);
+//    }
 
 }

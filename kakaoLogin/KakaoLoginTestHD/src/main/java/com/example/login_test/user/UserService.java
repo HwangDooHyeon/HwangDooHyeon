@@ -54,7 +54,7 @@ public class UserService {
         }
     }
 
-    public String login(UserRequest.JoinDTO requestDTO) {
+    public String login(UserRequest.LoginDTO requestDTO) {
         // ** 인증 작업.
         try{
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -76,6 +76,22 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void kakaoJoin(UserRequest.KakaoDTO requestDTO) {
+        checkEmail(requestDTO.getEmail());
+
+        try {
+            userRepository.save(requestDTO.toEntity());
+
+//            문자 보내는 코드
+//            SignUpMessageSender.sendMessage("01029055534", requestDTO.getPhoneNumber()
+//                ,"환영합니다. 회원가입이 완료되었습니다.");
+
+        }catch (Exception e){
+            throw new Exception500(e.getMessage());
+        }
+    }
+
     public void findAll() {
         List<User> all = userRepository.findAll();
         for(User user : all){
@@ -90,5 +106,20 @@ public class UserService {
             throw new Exception400("이미 존재하는 이메일 입니다. : " + email);
         }
     }
+
+
+    /*public UserInfo getUserInfo(int userId) {
+        User user = userRepository.findAllById(userId).orElse(null);
+
+        if (user != null) {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUsername(user.getUsername());
+            userInfo.setEmail(user.getEmail());
+            userInfo.setPhoneNumber(user.getPhoneNumber());
+            return userInfo;
+        } else {
+            return null;
+        }
+    }*/
 
 }

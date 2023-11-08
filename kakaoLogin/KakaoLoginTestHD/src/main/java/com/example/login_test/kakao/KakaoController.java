@@ -1,5 +1,7 @@
 package com.example.login_test.kakao;
 
+import com.example.login_test.user.UserRequest;
+import com.example.login_test.user.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +17,16 @@ import java.util.Map;
 public class KakaoController {
 
     private final KakaoService kakaoService;
+    private final UserService userService;
 
     @Autowired
-    public KakaoController(KakaoService kakaoService) {
+    public KakaoController(KakaoService kakaoService, UserService userService) {
         this.kakaoService = kakaoService;
+        this.userService = userService;
     }
 
     @GetMapping("/kakao/login")
-    public ResponseEntity<?> kakao_login(@RequestParam(value = "code", required = false) String code) throws JsonProcessingException {
+    public ResponseEntity<?> kakaoLogin(@RequestParam(value = "code", required = false) String code, UserRequest.KakaoDTO requestDTO) throws JsonProcessingException {
         if (code == null) {
             // 인증 코드가 전달되지 않았다면 로그인 URL을 반환
             String loginUrl = kakaoService.getKakaoLogin();
@@ -50,6 +54,8 @@ public class KakaoController {
             Map<String, Object> responseData = new LinkedHashMap<>();
             responseData.put("accessToken", accessToken);
             responseData.put("userInformation", userInformation);
+
+//            userService.kakaoJoin(requestDTO);
 
             // 응답이 성공적이라면 (200) 데이터 값 반환
             return ResponseEntity.ok(responseData);

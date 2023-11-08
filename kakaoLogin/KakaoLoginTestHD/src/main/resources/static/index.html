@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>join Page</title>
+    <title>homePage</title>
     <style>
         .join-button {
+            background-color: gray;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .login-button {
             background-color: gray;
             color: white;
             padding: 10px 20px;
@@ -13,12 +20,18 @@
     </style>
 </head>
 <body>
+
 <button class="join-button" id="joinbutton">join</button>
+<button class="login-button" id="loginbutton">login</button>
 
 <script>
     // 버튼을 클릭하면 /joinForm.html으로 이동
     document.getElementById("joinbutton").addEventListener("click", function() {
         window.location.href = "/joinForm.html";
+    });
+    // 버튼을 클릭하면 /loginForm.html으로 이동
+    document.getElementById("loginbutton").addEventListener("click", function() {
+        window.location.href = "/loginForm.html";
     });
 </script>
 

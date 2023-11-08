@@ -8,12 +8,14 @@ import lombok.Getter;
 public class KakaoUserInforDto {
 
     private final String nickname;
+    private final String name;
     private final String email;
     private final String profileImage;
     private final String phoneNumber;
 
-    public KakaoUserInforDto(String nickname, String email, String profileImage, String phoneNumber) {
+    public KakaoUserInforDto(String nickname, String name, String email, String profileImage, String phoneNumber) {
             this.nickname = nickname;
+            this.name = name;
             this.email = email;
             this.profileImage = profileImage;
             this.phoneNumber = phoneNumber;

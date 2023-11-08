@@ -82,6 +82,56 @@ public class KakaoService {
     }
 
     //액세스 토큰으로 카카오 API를 통해 사용자 정보를 가져옴
+    /*public KakaoUserInforDto getKakaoInfo(String accessToken) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        // "Authorization" 헤더: 클라이언트가 서버에게 자신의 신원을 증명 하는데 사용
+        // Bearer " 뒤에 액세스 토큰을 붙여서 이 헤더 값을 설정: 클라이언트가 이 액세스 토큰을 가지고 있음을 서버에 알리는 것
+        httpHeaders.add("Authorization", "Bearer " + accessToken);
+
+        // 이 요청에는 본문이 필요없어서 헤더만 사용(가능)
+        // 보통은 (본문,헤더) 가 일반적임
+        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<String> responseEntity =
+                restTemplate.exchange("https://kapi.kakao.com/v2/user/me",
+                        HttpMethod.POST,
+                        entity,
+                        String.class);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+
+            Gson gson = new Gson();
+
+            // kakaoUserInforResponse 객체로 변환
+            KakaoUserInforResponse kakaoUserInforResponse = gson.fromJson(responseEntity.getBody(), KakaoUserInforResponse.class);
+
+            // kakaoUserInforResponse 객체에서 값을 가져오기
+            String nickname = kakaoUserInforResponse.getProperties().getNickname();
+            String name = kakaoUserInforResponse.getKakao_account().getName();
+            String email = kakaoUserInforResponse.getKakao_account().getEmail();
+            String profile_image = kakaoUserInforResponse.getProperties().getProfile_image();
+            String phone_number = kakaoUserInforResponse.getKakao_account().getPhone_number();
+
+
+
+            System.out.println(nickname);
+            System.out.println(name);
+            System.out.println(email);
+            System.out.println(profile_image);
+            System.out.println(phone_number);
+
+            //가져온 정보를 KakaoUserInforDto 객체에 담아 반환
+            return new KakaoUserInforDto(nickname, name, email, profile_image, phone_number);
+
+        } else {
+            throw new HttpClientErrorException(responseEntity.getStatusCode(), "Failed to get user info");
+        }
+    }*/
+
+
     public KakaoUserInforDto getKakaoInfo(String accessToken) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -110,17 +160,21 @@ public class KakaoService {
 
             // kakaoUserInforResponse 객체에서 값을 가져오기
             String nickname = kakaoUserInforResponse.getProperties().getNickname();
+            String name = kakaoUserInforResponse.getKakao_account().getName();
             String email = kakaoUserInforResponse.getKakao_account().getEmail();
             String profile_image = kakaoUserInforResponse.getProperties().getProfile_image();
             String phone_number = kakaoUserInforResponse.getKakao_account().getPhone_number();
 
+
+
             System.out.println(nickname);
+            System.out.println(name);
             System.out.println(email);
             System.out.println(profile_image);
             System.out.println(phone_number);
 
             //가져온 정보를 KakaoUserInforDto 객체에 담아 반환
-            return new KakaoUserInforDto(nickname, email, profile_image, phone_number);
+            return new KakaoUserInforDto(nickname, name, email, profile_image, phone_number);
 
         } else {
             throw new HttpClientErrorException(responseEntity.getStatusCode(), "Failed to get user info");
