@@ -1,4 +1,4 @@
-//package com.example.login_test.kakao;
+package com.example.login_test.kakao;
 //
 //import lombok.Getter;
 //

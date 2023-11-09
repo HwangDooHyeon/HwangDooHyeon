@@ -2,6 +2,7 @@ package com.example.login_test.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -13,7 +14,6 @@ public class UserRequest {
     @Getter
     @Setter
     public static class JoinDTO {
-
 
 
         // 데이터가 비어있을 수 없는 상태.
@@ -32,7 +32,6 @@ public class UserRequest {
         private String email;
 
 
-
         @NotEmpty
         @Size(min = 8, max = 20, message = "8자 이상 20자 이내로 작성 가능합니다.")
         /*
@@ -47,16 +46,16 @@ public class UserRequest {
         private String password;
 
 
-
         @NotEmpty
         private String username;
 
+
+        private String provider;
 
 
         @NotEmpty
         @Pattern(regexp = "^[0-9]{10,11}$", message = "휴대폰 번호는 숫자 10~11자리만 가능합니다.")
         private String phoneNumber;
-
 
 
         public User toEntity() {
@@ -96,6 +95,7 @@ public class UserRequest {
 
 
         @NotEmpty
+        @Pattern(regexp = "^[0-9]{10,11}$", message = "휴대폰 번호는 숫자 10~11자리만 가능합니다.")
         private String phoneNumber;
 
 

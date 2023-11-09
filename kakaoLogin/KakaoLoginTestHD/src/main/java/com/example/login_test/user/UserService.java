@@ -83,10 +83,6 @@ public class UserService {
         try {
             userRepository.save(requestDTO.toEntity());
 
-//            문자 보내는 코드
-//            SignUpMessageSender.sendMessage("01029055534", requestDTO.getPhoneNumber()
-//                ,"환영합니다. 회원가입이 완료되었습니다.");
-
         }catch (Exception e){
             throw new Exception500(e.getMessage());
         }

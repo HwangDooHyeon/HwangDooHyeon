@@ -4,8 +4,8 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
-public class KakaoUserInforResponse {
-    private final long id;
+public class KakaoUserInfoResponse {
+    private final Long id;
     private final Properties properties;
     private final KakaoAccount kakao_account;
 
