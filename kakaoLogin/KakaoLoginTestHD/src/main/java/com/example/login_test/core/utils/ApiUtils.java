@@ -32,7 +32,8 @@ public class ApiUtils {
     }
 
     // ** JSON으로 반환해야할 데이터.
-    @AllArgsConstructor @Getter
+    @AllArgsConstructor
+    @Getter
     public static class ApiResult<T>{
         private final boolean success; // 현재 상태
         private final T response; // 반환할 실제 데이터

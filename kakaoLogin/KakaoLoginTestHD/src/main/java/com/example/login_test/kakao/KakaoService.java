@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +17,20 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-
 @Service
 public class KakaoService {
 
-    private final String KAKAO_AUTH_URI = "https://kauth.kakao.com/oauth";
-    private final String API_KEY = "982e75f737fe11057aa6b583438a89f3";
-    private final String REDIRECT_URI = "http://localhost:8080/kakao/login";
+    @Value("${kakao.auth.uri}")
+    private String KAKAO_AUTH_URI;
+
+    @Value("${kakao.api.key}")
+    private String API_KEY;
+
+    @Value("${kakao.redirect.uri}")
+    private String REDIRECT_URI;
+
+    @Value("${kakao.secret.key}")
+    private String Client_Secret;
 
     // 컨롤에서 이 메서드를 호출
     // 카카오 로그인 페이지로 리다이렉트 하기 위한 URL 생성(return 카카오 로그인 페이지로)
@@ -52,6 +60,7 @@ public class KakaoService {
         params.add("client_id"    , API_KEY);
         params.add("redirect_uri" , REDIRECT_URI);
         params.add("code"         , code);
+        params.add("client_secret", Client_Secret);
 
         //params에 설정된 파라미터와 headers에 설정된 헤더를 포함하는 HTTP 요청을 생성하고,
         // 이를 RestTemplate을 통해 보내는 작업을 준비
@@ -112,14 +121,15 @@ public class KakaoService {
             Gson gson = new Gson();
 
             // kakaoUserInforResponse 객체로 변환
-            KakaoUserInfoResponse kakaoUserInforResponse = gson.fromJson(responseEntity.getBody(), KakaoUserInfoResponse.class);
+//            KakaoUserInfoResponse kakaoUserInfoResponse = gson.fromJson(responseEntity.getBody(), KakaoUserInfoResponse.class);
+            UserRequest.KakaoDTO kakaoDTO = gson.fromJson(responseEntity.getBody(), UserRequest.KakaoDTO.class);
 
             // kakaoUserInforResponse 객체에서 값을 가져오기
-            String name = kakaoUserInforResponse.getKakao_account().getName();
-            String phone_number = kakaoUserInforResponse.getKakao_account().getPhone_number();
-            String email = kakaoUserInforResponse.getKakao_account().getEmail();
-            String nickname = kakaoUserInforResponse.getProperties().getNickname();
-            String profile_image = kakaoUserInforResponse.getProperties().getProfile_image();
+            String name = kakaoDTO.getKakao_account().getName();
+            String phone_number = kakaoDTO.getKakao_account().getPhone_number();
+            String email = kakaoDTO.getKakao_account().getEmail();
+            String nickname = kakaoDTO.getProperties().getNickname();
+            String profile_image = kakaoDTO.getProperties().getProfile_image();
 
             System.out.println(name);
             System.out.println(phone_number);
@@ -136,53 +146,3 @@ public class KakaoService {
     }
 
 }
-
-    //액세스 토큰으로 카카오 API를 통해 사용자 정보를 가져옴
-    /*public KakaoUserInfoDTO getKakaoInfo(String accessToken) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        // "Authorization" 헤더: 클라이언트가 서버에게 자신의 신원을 증명 하는데 사용
-        // Bearer " 뒤에 액세스 토큰을 붙여서 이 헤더 값을 설정: 클라이언트가 이 액세스 토큰을 가지고 있음을 서버에 알리는 것
-        httpHeaders.add("Authorization", "Bearer " + accessToken);
-
-        // 이 요청에는 본문이 필요없어서 헤더만 사용(가능)
-        // 보통은 (본문,헤더) 가 일반적임
-        HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-
-        ResponseEntity<String> responseEntity =
-                restTemplate.exchange("https://kapi.kakao.com/v2/user/me",
-                        HttpMethod.POST,
-                        entity,
-                        String.class);
-
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-
-            Gson gson = new Gson();
-
-            // kakaoUserInforResponse 객체로 변환
-            KakaoUserInfoResponse kakaoUserInforResponse = gson.fromJson(responseEntity.getBody(), KakaoUserInfoResponse.class);
-
-            // kakaoUserInforResponse 객체에서 값을 가져오기
-            String nickname = kakaoUserInforResponse.getProperties().getNickname();
-            String name = kakaoUserInforResponse.getKakao_account().getName();
-            String email = kakaoUserInforResponse.getKakao_account().getEmail();
-            String profile_image = kakaoUserInforResponse.getProperties().getProfile_image();
-            String phone_number = kakaoUserInforResponse.getKakao_account().getPhone_number();
-
-
-
-            System.out.println(nickname);
-            System.out.println(name);
-            System.out.println(email);
-            System.out.println(profile_image);
-            System.out.println(phone_number);
-
-            //가져온 정보를 KakaoUserInfoDTO 객체에 담아 반환
-            return new KakaoUserInfoDTO(nickname, name, email, profile_image, phone_number);
-
-        } else {
-            throw new HttpClientErrorException(responseEntity.getStatusCode(), "Failed to get user info");
-        }
-    }*/

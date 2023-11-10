@@ -5,6 +5,7 @@ import com.example.login_test.core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
@@ -43,9 +44,5 @@ public class UserController {
                 .body(ApiUtils.success(null));
     }
 
-//    @GetMapping("/user-info/1")
-//    public UserInfo getUserInfo(@PathVariable int userId) {
-//        return userService.getUserInfo(userId);
-//    }
 
 }

@@ -67,7 +67,7 @@ public class User{
     @Column(length = 100)
     private String provider;
 
-    @Column(length = 11, nullable = false)
+    @Column(length = 16, nullable = false)
     private String phoneNumber;
 
     @Column(length = 30)

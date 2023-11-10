@@ -1,6 +1,9 @@
 package com.example.login_test.user;
 
+import com.example.login_test.kakao.KakaoUserInfoResponse;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -75,13 +78,29 @@ public class UserRequest {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class KakaoDTO {
 
-        public KakaoDTO(String email, String name, String phone_number) {
-            this.email = email;
-            this.username = name;
-            this.phoneNumber = phone_number;
+        private final Long id;
+        private final KakaoAccount kakao_account;
+        private final Properties properties;
+
+        @Getter
+        @AllArgsConstructor
+        public static class KakaoAccount {
+            private final String name;
+            private final String email;
+            private final String phone_number;
         }
+
+        @Getter
+        @AllArgsConstructor
+        public static class Properties {
+            private final String nickname;
+            private final String profile_image;
+            private final String thumbnail_image;
+        }
+
 
         @NotEmpty
         @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")
@@ -95,7 +114,7 @@ public class UserRequest {
 
 
         @NotEmpty
-        @Pattern(regexp = "^[0-9]{10,11}$", message = "휴대폰 번호는 숫자 10~11자리만 가능합니다.")
+        @Pattern(regexp = "^[0-9]{10,16}$", message = "휴대폰 번호는 숫자 10~16자리만 가능합니다.")
         private String phoneNumber;
 
 

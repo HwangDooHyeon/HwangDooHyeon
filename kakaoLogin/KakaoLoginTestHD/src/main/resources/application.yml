@@ -12,6 +12,9 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+  output:
+    ansi:
+      enabled: ALWAYS
 
 kakao:
   api:
@@ -19,4 +22,6 @@ kakao:
   secret:
     key: "brxxF4PYoDwYyKg1UI8vOjVMTevHnJIw"
   redirect:
-    uri : "http://localhost:8080/kakao/login"
+    uri: "http://localhost:8080/kakao/login"
+  auth:
+    uri: "https://kauth.kakao.com/oauth"
