@@ -1,16 +1,13 @@
 package com.example.login_test.kakao;
 
-import com.example.login_test.user.UserRequest;
 import com.example.login_test.user.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -54,7 +51,7 @@ public class KakaoController {
             responseData.put("accessToken", accessToken);
             responseData.put("userInformation", userInformation);
 
-            userService.kakaoJoin(requestDTO);
+//            userService.kakaoJoin(requestDTO);
 
             // 응답이 성공적이라면 (200) 데이터 값 반환
             return ResponseEntity.ok(responseData);
