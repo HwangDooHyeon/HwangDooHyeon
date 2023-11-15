@@ -15,13 +15,10 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-
 kakao:
   api:
     key: "982e75f737fe11057aa6b583438a89f3"
   secret:
     key: "brxxF4PYoDwYyKg1UI8vOjVMTevHnJIw"
   redirect:
-    uri: "http://localhost:8080/kakao/login"
-  auth:
-    uri: "https://kauth.kakao.com/oauth"
+    uri : "http://localhost:8080/kakao/login"

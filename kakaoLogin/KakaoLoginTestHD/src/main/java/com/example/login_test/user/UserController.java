@@ -4,6 +4,9 @@ import com.example.login_test.core.security.JwtTokenProvider;
 import com.example.login_test.core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -37,6 +40,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Error error) {
+
+        String jwt = userService.login(requestDTO);
+
+        return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt)
+                .body(ApiUtils.success(null));
+    }
+
+    @GetMapping("/infoForm")
+    public ResponseEntity<?> userInfo(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Error error) {
 
         String jwt = userService.login(requestDTO);
 

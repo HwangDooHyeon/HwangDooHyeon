@@ -14,34 +14,14 @@
     <p><strong>전화번호:</strong> <span id="phoneNumber"></span></p>
 </div>
 
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-        try {
-            // 사용자 정보를 가져오는 API 엔드포인트 호출
-            const response = await fetch('/user-info', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const userInfo = await response.json();
-
-                // 사용자 정보를 페이지에 표시
-                document.getElementById('username').textContent = userInfo.username;
-                document.getElementById('email').textContent = userInfo.email;
-                document.getElementById('phoneNumber').textContent = userInfo.phoneNumber;
-            } else {
-                console.error('HTTP Error:', response.status);
-                alert("사용자 정보를 불러오는 중에 문제가 발생했습니다.");
-            }
-
-        } catch (error) {
-            console.error('Error:', error);
-            alert("사용자 정보를 불러오는 중에 문제가 발생했습니다.");
+    function displayUserInfo(username, email, phoneNumber) {
+            document.getElementById('username').innerText = username;
+            document.getElementById('email').innerText = email;
+            document.getElementById('phoneNumber').innerText = phoneNumber;
         }
-    });
 </script>
 
 </body>

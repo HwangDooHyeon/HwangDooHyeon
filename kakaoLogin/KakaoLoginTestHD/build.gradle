@@ -19,7 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-//    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 
@@ -37,11 +37,7 @@ dependencies {
 
 
     // ** nurigo message
-    implementation 'net.nurigo:sdk:4.2.7'
-
-    implementation 'com.google.code.gson:gson:2.8.7'
-
-
+    implementation 'net.nurigo:sdk:4.3.0'
 }
 
 ext {

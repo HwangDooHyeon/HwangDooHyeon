@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 public class KakaoResponse {
     private Long id;
     private String email;
-    private String nickname;
-    private String thumbnail_image;
-    private String properties;
+    private String username;
+    private String phoneNumber;
     private String provider;
+    private String properties;
 }

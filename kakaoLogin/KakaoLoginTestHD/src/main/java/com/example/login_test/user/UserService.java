@@ -30,9 +30,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
 
     @Transactional
     public void join(UserRequest.JoinDTO requestDTO) {
@@ -53,6 +55,7 @@ public class UserService {
             throw new Exception500(e.getMessage());
         }
     }
+
 
     public String login(UserRequest.LoginDTO requestDTO) {
         // ** 인증 작업.
@@ -76,17 +79,6 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public void kakaoJoin(UserRequest.KakaoDTO requestDTO) {
-        checkEmail(requestDTO.getEmail());
-
-        try {
-            userRepository.save(requestDTO.toEntity());
-
-        }catch (Exception e){
-            throw new Exception500(e.getMessage());
-        }
-    }
 
     public void findAll() {
         List<User> all = userRepository.findAll();
@@ -94,6 +86,7 @@ public class UserService {
             user.output();
         }
     }
+
 
     public void checkEmail(String email){
         // 동일한 이메일이 있는지 확인.
@@ -104,18 +97,5 @@ public class UserService {
     }
 
 
-    /*public UserInfo getUserInfo(int userId) {
-        User user = userRepository.findAllById(userId).orElse(null);
-
-        if (user != null) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUsername(user.getUsername());
-            userInfo.setEmail(user.getEmail());
-            userInfo.setPhoneNumber(user.getPhoneNumber());
-            return userInfo;
-        } else {
-            return null;
-        }
-    }*/
 
 }

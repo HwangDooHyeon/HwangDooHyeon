@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class User{
     private String password;
 
     @Column(length = 45, nullable = false)
-    private String username;
+    private String userName;
 
     @Column(length = 100)
     private String provider;
@@ -84,11 +83,11 @@ public class User{
      * 주로 생성자의 인자가 많거나, 인자를 선택적으로 지정해야하는 경우에 사용.
      * */
     @Builder
-    public User(int id, String email, String password, String username, String provider, String phoneNumber, List<String> roles) {
+    public User(int id, String email, String password, String userName, String provider, String phoneNumber, List<String> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.username = username;
+        this.userName = userName;
         this.provider = provider;
         this.phoneNumber = phoneNumber;
         this.roles = roles;
@@ -98,7 +97,7 @@ public class User{
         System.out.println(id);
         System.out.println(email);
         System.out.println(password);
-        System.out.println(username);
+        System.out.println(userName);
         System.out.println(provider);
         System.out.println(phoneNumber);
         System.out.println(roles);
