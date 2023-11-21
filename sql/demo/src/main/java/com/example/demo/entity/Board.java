@@ -1,31 +1,51 @@
 package com.example.demo.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Board {
-    @javax.persistence.Id
+
+    // PK
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column (length = 100, nullable = true)
+    // 작성자 이메일
+    @Column (length = 100)
     private String email;
 
-    @Column (length = 256, nullable = true)
-    private String password;
-
-    @Column (length = 45, nullable = true)
+    // 작성자 이름
+    @Column (length = 45)
     private String user_name;
 
-    @Column (length = 100, nullable = false)
-    private String provider;
+    // 제목
+    @Column (length = 50)
+    private String boardTitle;
 
-    @Column (length = 11, nullable = true)
-    private String phone_number;
+    // 내용
+    @Column (length = 300)
+    private String boardContents;
 
-    @Column (length = 30, nullable = true)
-    private String roles;
+    // 최초 작성 시간
+    @Column (length = 10)
+    private LocalDateTime create_time;
 
-    @Column (length = 3, nullable = true)
-    private int user_age;
+    // 최근 수정 시간
+    @Column (length = 10)
+    private LocalDateTime update_time;
+
+    @Builder
+    public Board(Long id, String email, String user_name, String boardTitle, String boardContents, LocalDateTime create_time, LocalDateTime update_time) {
+        this.Id = id;
+        this.email = email;
+        this.user_name = user_name;
+        this.boardTitle = boardTitle;
+        this.boardContents = boardContents;
+        this.create_time = create_time;
+        this.update_time = update_time;
+    }
+
 }
