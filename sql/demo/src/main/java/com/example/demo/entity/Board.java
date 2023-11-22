@@ -1,11 +1,15 @@
 package com.example.demo.entity;
 
+import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Builder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Entity
+@Getter
 public class Board {
 
     // PK
@@ -30,11 +34,11 @@ public class Board {
     private String boardContents;
 
     // 최초 작성 시간
-    @Column (length = 10)
+    @Column
     private LocalDateTime create_time;
 
     // 최근 수정 시간
-    @Column (length = 10)
+    @Column
     private LocalDateTime update_time;
 
     @Builder
