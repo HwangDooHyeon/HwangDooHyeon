@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
 </head>
 <body>
 
@@ -12,16 +12,16 @@ Home
 <br>
 
 <button onclick="create()">글쓰기</button>
-<button onclick="read()">목록</button>
+<button onclick="paging()">목록</button>
 
 </body>
 
 <script>
     const create = () => {
-    location.href = "/createBoard";
+    location.href = "/board/createPost";
     }
-    const read = () => {
-    location.href = "/paging";
+    const paging = () => {
+    location.href = "/board/paging";
     }
 </script>
 

@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Board;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
+import com.example.demo.entity.Board;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,16 +12,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
     private final BoardRepository boardRepository;
 
+
+    @Transactional
     public void save(BoardDTO boardDTO) {
         boardDTO.setCreate_time(LocalDateTime.now());
         boardRepository.save(boardDTO.toEntity());
+    }
+
+
+    public BoardDTO findById(Long Id) {
+
+//        if(boardRepository.findById(Id).isPresent()) ... 예외처리 생략
+
+        Board board = boardRepository.findById(Id).get();
+        return BoardDTO.toBoardDTO(board);
     }
 
 
@@ -45,9 +59,27 @@ public class BoardService {
                 board.getId(),
                 board.getBoardTitle(),
                 board.getBoardContents(),
-                board.getCreate_time()));
-
+                board.getCreate_time(),
+                board.getUpdate_time()
+        ));
     }
 
+
+    @Transactional
+    public void updatePost(BoardDTO boardDTO) {
+        Optional<Board> boardOptional = boardRepository.findById(boardDTO.getId());
+
+        Board board = boardOptional.get();
+
+        board.updateFromDTO(boardDTO);
+
+        boardRepository.save(board);
+    }
+
+
+    @Transactional
+    public void delete(Long Id) {
+        boardRepository.deleteById(Id);
+    }
 
 }

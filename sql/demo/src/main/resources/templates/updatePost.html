@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form action="/board/updatePost" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="Id" th:value="${board.Id}">
+        <!--        writer: <input type="text" name="user_name">-->
+        <!--        email: <input type="text" name="email"> <br><br>-->
+        <!--        pass: <input type="text" name="boardPass"> <br>-->
+        title: <input type="text" name="boardTitle"> <br><br>
+        contents: <br><textarea name="boardContents" cols="30" rows="10"></textarea> <br>
+        <!--        file: <input type="file" name="boardFile"> <br>-->
+        <input type="submit" value="수정">
+
+    </form>
+
+</body>
+</html>

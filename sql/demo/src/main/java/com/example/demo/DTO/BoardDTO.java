@@ -30,7 +30,7 @@ public class BoardDTO {
     private LocalDateTime create_time;
 
     // 최근 수정 시간
-//    private LocalDateTime update_time;
+    private LocalDateTime update_time;
 
     public Board toEntity() {
         return Board.builder()
@@ -41,6 +41,17 @@ public class BoardDTO {
                 .create_time(create_time)
                 .update_time(LocalDateTime.now())
                 .build();
+    }
+
+
+    public static BoardDTO toBoardDTO(Board board) {
+        return new BoardDTO(
+                board.getId(),
+                board.getBoardTitle(),
+                board.getBoardContents(),
+                board.getCreate_time(),
+                board.getUpdate_time()
+                );
     }
 
 }
