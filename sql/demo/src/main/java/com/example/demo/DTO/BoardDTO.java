@@ -32,6 +32,7 @@ public class BoardDTO {
     // 최근 수정 시간
     private LocalDateTime update_time;
 
+
     public Board toEntity() {
         return Board.builder()
 //                .email(email)

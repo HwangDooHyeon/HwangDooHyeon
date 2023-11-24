@@ -7,9 +7,11 @@ import lombok.Builder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
-@Entity
+@Entity // = sql에서 table
 @Getter
 public class Board {
 
@@ -41,6 +43,16 @@ public class Board {
     // 최근 수정 시간
     @Column
     private LocalDateTime update_time;
+
+
+    // 1:다 매핑 (게시글:댓글)
+    // 소유(1)와 비소유(다)
+    // mappedBy = "board" : board 테이블과 매핑
+    // cascade = CascadeType.REMOVE : 소유한 쪽에서 데이터를 지웠을 때(게시글 삭제), "다"에 해당하는 데이터도 함께 삭제한다.(게시글에 달린 댓글도 삭제)
+    // orphanRemoval = true : 연결관계가 끊어지면 삭제
+    // fetch = FetchType.LAZY : 지연 로딩 (성능 최적화)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> comment = new ArrayList<>();
 
     @Builder
     public Board(Long id, String email, String user_name, String boardTitle, String boardContents, LocalDateTime create_time, LocalDateTime update_time) {
