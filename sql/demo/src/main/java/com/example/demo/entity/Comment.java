@@ -2,10 +2,12 @@ package com.example.demo.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Entity
 @Getter
 public class Comment {
@@ -15,6 +17,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 작성자
     @Column (length = 45)
     private String writer;
 
@@ -22,6 +25,7 @@ public class Comment {
     @Column (length = 300)
     private String contents;
 
+    // 생성 시간
     @Column
     private LocalDateTime createdTime;
 
@@ -37,5 +41,11 @@ public class Comment {
         this.contents = contents;
         this.createdTime = createdTime;
         this.board = board;
+    }
+
+    public Comment toUpdate(Board board) {
+        Comment comment = new Comment();
+        this.board = board;
+        return comment;
     }
 }

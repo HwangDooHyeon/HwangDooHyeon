@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
@@ -28,11 +30,24 @@ public class CommentService {
 
         if(optionalComment.isPresent()) {
             Board board = optionalComment.get();
-            return commentRepository.save(commentDTO.toEntity(board));
+
+            Comment entity = commentDTO.toEntity();
+            entity.toUpdate(board);
+            return commentRepository.save(entity);
         } else {
             return null;
         }
+    }
 
-
+    public List<CommentDTO> findAll(Long boardId) {
+        Board boardEntity = boardRepository.findById(boardId).get();
+        java.util.List<Comment> commentEntityList = commentRepository.findAllByBoardOrderByIdDesc(boardEntity);
+        /* EntityList -> DTOList */
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (Comment commentEntity: commentEntityList) {
+            CommentDTO commentDTO = CommentDTO.toCommentDTO(commentEntity, boardId);
+            commentDTOList.add(commentDTO);
+        }
+        return commentDTOList;
     }
 }

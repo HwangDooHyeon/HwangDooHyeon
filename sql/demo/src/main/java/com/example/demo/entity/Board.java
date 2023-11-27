@@ -54,6 +54,10 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<File> file = new ArrayList<>();
+
     @Builder
     public Board(Long id, String email, String user_name, String boardTitle, String boardContents, LocalDateTime create_time, LocalDateTime update_time) {
         this.Id = id;

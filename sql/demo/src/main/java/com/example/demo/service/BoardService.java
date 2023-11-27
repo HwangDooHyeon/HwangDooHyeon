@@ -1,18 +1,28 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.FileDTO;
+import com.example.demo.entity.File;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
 import com.example.demo.entity.Board;
 
+import com.example.demo.repository.FileRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Transactional(readOnly = true)
 @Service
@@ -20,12 +30,65 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final FileRepository fileRepository;
+
+    // 학원에서는 /G/
+    // 집에서는 /본인 Pc 이름/
+    String filePath = "C:/Users/G/Desktop/HwangDooHyeon/sql/Board Files/";
 
 
     @Transactional
-    public void save(BoardDTO boardDTO) {
+    public void save(BoardDTO boardDTO, MultipartFile[] files) throws IOException {
         boardDTO.setCreate_time(LocalDateTime.now());
         boardRepository.save(boardDTO.toEntity());
+
+        // 파일 정보 저장
+        for (MultipartFile file : files) {
+            createFilePath(file);
+            FileDTO fileDTO = new FileDTO();
+            fileDTO.setFileName(file.getOriginalFilename());
+
+            fileRepository.save(fileDTO.toEntity());
+        }
+    }
+
+
+    private String createFilePath(MultipartFile file) throws IOException {
+
+        // 업로드 경로
+        Path uploadPath = Paths.get(filePath);
+
+        // 만약 경로가 없다면 -> 생성
+        if(!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // 업로드 된 파일명 추출
+        String originalFileName = file.getOriginalFilename();
+
+        // 업로드 된 파일의 확장자 추출
+        String formatType = originalFileName.substring(
+                originalFileName.lastIndexOf("."));
+
+        // 파일 이름만 남김
+        originalFileName = originalFileName.substring(
+                0, originalFileName.lastIndexOf(".")
+        );
+
+        // UUID
+        String uuid = UUID.randomUUID().toString();
+
+        Path path = uploadPath.resolve(
+                uuid + originalFileName + formatType
+        );
+
+        Files.copy(
+                file.getInputStream(),
+                path,
+                StandardCopyOption.REPLACE_EXISTING
+                );
+
+        return "";
     }
 
 

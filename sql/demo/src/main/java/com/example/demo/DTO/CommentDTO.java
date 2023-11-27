@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentDTO {
 
+
     private Long id;
 
     private String writer;
@@ -25,14 +26,23 @@ public class CommentDTO {
     private Long boardId;
 
 
-    public Comment toEntity(Board board) {
+    public Comment toEntity() {
         return Comment.builder()
-                .id(id)
                 .writer(writer)
                 .contents(contents)
                 .createdTime(createdTime)
-                .board(board)
                 .build();
 
+    }
+
+
+    public static CommentDTO toCommentDTO(Comment comment, Long boardId) {
+        CommentDTO commentDTO = new CommentDTO();
+        commentDTO.setId(comment.getId());
+        commentDTO.setWriter(comment.getWriter());
+        commentDTO.setContents(comment.getContents());
+        commentDTO.setCreatedTime(comment.getCreatedTime());
+        commentDTO.setBoardId(boardId);
+        return commentDTO;
     }
 }

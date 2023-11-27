@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Board;
+import com.example.demo.entity.File;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.DTO.BoardDTO;
@@ -13,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -82,8 +85,9 @@ public class BoardController {
 
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) {
-        boardService.save(boardDTO);
+    public String save(@ModelAttribute BoardDTO boardDTO,
+                       @RequestParam MultipartFile[] files) throws IOException {
+        boardService.save(boardDTO, files);
         return "redirect:/board/";
     }
 

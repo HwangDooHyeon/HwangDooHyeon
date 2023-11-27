@@ -15,10 +15,10 @@
         <th>title</th>
         <td th:text="${board.getBoardTitle}"></td>
     </tr>
-<!--    <tr>-->
-<!--        <th>date</th>-->
-<!--        <td th:text="${board.getCreate_time}"></td>-->
-<!--    </tr>-->
+    <tr>
+        <th>date</th>
+        <td th:text="${board.getCreate_time}"></td>
+    </tr>
     <tr>
         <th>contents</th>
         <td th:text="${board.getBoardContents}"></td>
@@ -93,7 +93,7 @@
                 output += "<th>작성시간</th></tr>";
                 for (let i in res) {
                     output += "<tr>";
-                    output += "<td>" + res[i].boardId + "</td>";
+                    output += "<td>" + res[i].id + "</td>";
                     output += "<td>" + res[i].writer + "</td>";
                     output += "<td>" + res[i].contents + "</td>";
                     output += "<td>" + res[i].createdTime + "</td>";
