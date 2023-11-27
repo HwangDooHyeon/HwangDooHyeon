@@ -1,11 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.CommentDTO;
+import com.example.demo.DTO.FileDTO;
 import com.example.demo.entity.Board;
 import com.example.demo.entity.File;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.DTO.BoardDTO;
 
+import com.example.demo.service.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @AllArgsConstructor
@@ -25,6 +31,7 @@ import java.util.Optional;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
 
     @GetMapping("/createPost")
@@ -77,17 +84,21 @@ public class BoardController {
     public String paging(@PathVariable Long Id, Model model, @PageableDefault(page = 1) Pageable pageable) {
         BoardDTO boardDTO = boardService.findById(Id);
 
+        //댓글 정보 가져오기
+        List<CommentDTO> commentList = commentService.findAll(Id);
+
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("commentList", commentList);
 
         return "postDetail";
     }
 
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO,
+    public String save(@ModelAttribute BoardDTO boardDTO, FileDTO fileDTO,
                        @RequestParam MultipartFile[] files) throws IOException {
-        boardService.save(boardDTO, files);
+        boardService.save(boardDTO, fileDTO, files);
         return "redirect:/board/";
     }
 

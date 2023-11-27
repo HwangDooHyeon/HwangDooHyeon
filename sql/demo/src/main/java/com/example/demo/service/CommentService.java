@@ -31,9 +31,9 @@ public class CommentService {
         if(optionalComment.isPresent()) {
             Board board = optionalComment.get();
 
-            Comment entity = commentDTO.toEntity();
-            entity.toUpdate(board);
-            return commentRepository.save(entity);
+            Comment comment = commentDTO.toEntity();
+            comment.toUpdate(board);
+            return commentRepository.save(comment);
         } else {
             return null;
         }

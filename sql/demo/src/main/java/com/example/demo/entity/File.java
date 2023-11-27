@@ -46,4 +46,11 @@ public class File {
         this.fileSize = fileSize;
         this.board = board;
     }
+
+    public File toUpdate(Board board) {
+        File file = new File();
+        this.board = board;
+        return file;
+    }
+
 }

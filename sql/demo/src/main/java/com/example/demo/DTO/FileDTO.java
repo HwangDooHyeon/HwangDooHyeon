@@ -25,12 +25,13 @@ public class FileDTO {
     // 게시물 ID
     private Long boardId;
 
-    public File toEntity() {
+    public File toEntity(Board board) {
         return File.builder()
                 .filePath(filePath)
                 .fileName(fileName)
                 .fileType(fileType)
                 .fileSize(fileSize)
+                .board(board)
                 .build();
     }
 
