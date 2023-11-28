@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class File {
+public class BoardFile {
 
     // PK
     @Id
@@ -25,6 +25,10 @@ public class File {
     @Column
     private String fileName;
 
+    // uuid (랜덤 키)
+    @Column
+    private String uuid;
+
     // 파일 포멧
     @Column
     private String fileType;
@@ -33,24 +37,26 @@ public class File {
     @Column
     private Long fileSize;
 
+    // 1 대 다 연관관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
     @Builder
-    public File(Long fildId, String filePath, String fileName, String fileType, Long fileSize, Board board) {
+    public BoardFile(Long fildId, String filePath, String fileName, String uuid, String fileType, Long fileSize, Board board) {
         this.fildId = fildId;
         this.filePath = filePath;
         this.fileName = fileName;
+        this.uuid = uuid;
         this.fileType = fileType;
         this.fileSize = fileSize;
         this.board = board;
     }
 
-    public File toUpdate(Board board) {
-        File file = new File();
+    public BoardFile toUpdate(Board board) {
+        BoardFile boardFile = new BoardFile();
         this.board = board;
-        return file;
+        return boardFile;
     }
 
 }

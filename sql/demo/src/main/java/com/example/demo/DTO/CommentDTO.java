@@ -1,10 +1,8 @@
 package com.example.demo.DTO;
 
-import com.example.demo.entity.Board;
 import com.example.demo.entity.Comment;
 import lombok.*;
 
-import javax.persistence.JoinColumn;
 import java.time.LocalDateTime;
 
 @Getter

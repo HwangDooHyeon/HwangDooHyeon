@@ -18,7 +18,7 @@ public class Board {
     // PK
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     // 작성자 이메일
     @Column (length = 100)
@@ -56,11 +56,11 @@ public class Board {
 
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<File> file = new ArrayList<>();
+    private List<BoardFile> boardFile = new ArrayList<>();
 
     @Builder
     public Board(Long id, String email, String user_name, String boardTitle, String boardContents, LocalDateTime create_time, LocalDateTime update_time) {
-        this.Id = id;
+        this.id = id;
         this.email = email;
         this.user_name = user_name;
         this.boardTitle = boardTitle;

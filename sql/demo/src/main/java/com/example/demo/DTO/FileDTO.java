@@ -1,7 +1,7 @@
 package com.example.demo.DTO;
 
 import com.example.demo.entity.Board;
-import com.example.demo.entity.File;
+import com.example.demo.entity.BoardFile;
 import lombok.*;
 
 @Getter
@@ -16,6 +16,9 @@ public class FileDTO {
     // 파일 이름
     private String fileName;
 
+    // uuid (랜덤 키)
+    private String uuid;
+
     // 파일 포멧
     private String fileType;
 
@@ -25,10 +28,11 @@ public class FileDTO {
     // 게시물 ID
     private Long boardId;
 
-    public File toEntity(Board board) {
-        return File.builder()
+    public BoardFile toEntity(Board board) {
+        return BoardFile.builder()
                 .filePath(filePath)
                 .fileName(fileName)
+                .uuid(uuid)
                 .fileType(fileType)
                 .fileSize(fileSize)
                 .board(board)

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardDTO {
 
-    private Long Id;
+    private Long id;
 
     // 작성자 이메일
 //    private String email;
